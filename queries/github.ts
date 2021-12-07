@@ -13,7 +13,7 @@ export const CREATE_ISSUES = gql`
 
 export const LIST_USERS_WITH_PAGINATION = gql`
   query ListUsers($query: String!, $cursor: String) {
-    search(query: $query, type: USER, first: 20, after: $cursor) {
+    search(query: $query, type: USER, first: 10, after: $cursor) {
       userCount
       edges {
         node {
