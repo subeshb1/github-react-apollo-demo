@@ -4,6 +4,7 @@ import "tailwindcss/tailwind.css";
 import client from "lib/apolloClient";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -14,6 +15,7 @@ function App({ Component, pageProps }: AppProps) {
       <ApolloProvider client={client}>
         <Component {...pageProps} />
       </ApolloProvider>
+      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { EyeIcon, StarIcon } from "@heroicons/react/solid";
 import DefaultLayout from "components/Layouts/DefaultLayout";
+import CreateIssue from "components/Page/Issue/CreateIssue/CreateIssue";
 import BreadCrumbs from "components/shared/Breadcrumbs/Breadcrumbs";
 import { Button } from "components/shared/Button/Button";
 import Input from "components/shared/Input/Input";
@@ -9,7 +10,7 @@ import SkeletonLoader from "components/shared/SkeletonLoader/SkeletonLoader";
 import Table from "components/shared/Table/Table";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { LIST_REPOSITORY_ISSUES } from "queries/github";
+import { FIND_REPO_BY_NAME, LIST_REPOSITORY_ISSUES } from "queries/github";
 import React, { ReactElement } from "react";
 
 export default function Repository(): ReactElement {
@@ -17,13 +18,18 @@ export default function Repository(): ReactElement {
   const [repoSearch, setRepoSearch] = React.useState("");
   const userId = router.query.userId as string;
   const repoName = router.query.repository as string;
-  const { loading, data } = useQuery(LIST_REPOSITORY_ISSUES, {
+  const { loading, data, refetch } = useQuery(LIST_REPOSITORY_ISSUES, {
     variables: {
       owner: userId,
       name: repoName,
     },
   });
-  console.log(data?.repository?.issues?.edges);
+  const { loading: nameLoading, data: nameData } = useQuery(FIND_REPO_BY_NAME, {
+    variables: {
+      owner: userId,
+      name: repoName,
+    },
+  });
   return (
     <DefaultLayout>
       <BreadCrumbs
@@ -47,7 +53,12 @@ export default function Repository(): ReactElement {
       <div className="flex justify-between gap-x-3 my-10">
         <h1 className="text-3xl font-medium ">{repoName}</h1>
         <div>
-          <Button className="">Create Issue</Button>
+          <SkeletonLoader
+            status={nameLoading ? "loading" : "success"}
+            type="line"
+          >
+            <CreateIssue id={nameData?.repository?.id} refetch={refetch} />
+          </SkeletonLoader>
         </div>
       </div>
       <Panel>

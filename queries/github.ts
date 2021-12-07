@@ -132,3 +132,15 @@ export const LIST_REPOSITORY_ISSUES = gql`
     }
   }
 `;
+
+export const FIND_REPO_BY_NAME = gql`
+  query FindRepoByName($owner: String!, $name: String!) {
+    repository(owner: $owner, name: $name) {
+      id
+      name
+      owner {
+        login
+      }
+    }
+  }
+`;

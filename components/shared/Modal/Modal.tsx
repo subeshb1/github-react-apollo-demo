@@ -1,7 +1,7 @@
-import { Dialog } from '@headlessui/react';
-import React, { ReactElement, ReactNode } from 'react';
-import { Button } from '../Button/Button';
-import Panel from '../Panel/Panel';
+import { Dialog } from "@headlessui/react";
+import React, { ReactElement, ReactNode } from "react";
+import { Button } from "../Button/Button";
+import Panel from "../Panel/Panel";
 
 interface Props {
   heading?: ReactNode;
@@ -10,6 +10,7 @@ interface Props {
   onConfirm: () => void;
   loading?: boolean;
   text?: ReactNode;
+  children?: ReactNode;
   cancelText?: string;
   confirmText?: string;
   danger?: boolean;
@@ -20,8 +21,9 @@ export default function Modal({
   loading,
   text,
   onClose,
-  cancelText = 'Cancel',
-  confirmText = 'Confirm',
+  children,
+  cancelText = "Cancel",
+  confirmText = "Confirm",
   onConfirm,
   danger = false,
   onExit = () => undefined,
@@ -41,7 +43,8 @@ export default function Modal({
             <Panel.Heading className="flex items-center gap-x-2">
               {heading}
             </Panel.Heading>
-            <div className="p-5">{text}</div>
+            {text && <div className="p-5">{text}</div>}
+            {children}
             <Panel.Footer className="flex justify-end space-x-4">
               <Button
                 onClick={onClose}
@@ -53,8 +56,9 @@ export default function Modal({
               </Button>
               <Button
                 onClick={onConfirm}
-                bgClass={danger ? 'bg-br-red' : undefined}
+                bgClass={danger ? "bg-br-red" : undefined}
                 loading={loading}
+                disabled={loading}
               >
                 {confirmText}
               </Button>
