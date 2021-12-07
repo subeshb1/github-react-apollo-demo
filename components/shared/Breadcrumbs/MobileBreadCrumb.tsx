@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { DotsHorizontalIcon } from '@heroicons/react/outline';
-import { Menu, Transition } from '@headlessui/react';
-import { classNames, IBreadcrumbItem } from './Breadcrumbs';
+import React, { Fragment } from "react";
+import { DotsHorizontalIcon } from "@heroicons/react/outline";
+import { Menu, Transition } from "@headlessui/react";
+import { classNames, IBreadcrumbItem } from "./Breadcrumbs";
+import Link from "next/link";
 
 export function MobileBreadCrumb({
   navigation,
@@ -29,16 +29,17 @@ export function MobileBreadCrumb({
           {navigation.map((item) => (
             <Menu.Item key={item.name}>
               {({ active }) => (
-                <Link
-                  to={item.to || ''}
-                  className={classNames(
-                    active
-                      ? 'bg-br-primary bg-opacity-10 text-br-primary'
-                      : 'text-gray-700',
-                    'block px-4 py-2 text-sm '
-                  )}
-                >
-                  {item.name}
+                <Link href={item.to || ""}>
+                  <a
+                    className={classNames(
+                      active
+                        ? "bg-br-primary bg-opacity-10 text-br-primary"
+                        : "text-gray-700",
+                      "block px-4 py-2 text-sm "
+                    )}
+                  >
+                    {item.name}
+                  </a>
                 </Link>
               )}
             </Menu.Item>

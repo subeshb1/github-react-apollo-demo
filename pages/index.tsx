@@ -15,7 +15,6 @@ export default function Home() {
       query: userSearch,
     },
   });
-  console.log(data?.search.edges);
 
   return (
     <DefaultLayout>
@@ -42,7 +41,10 @@ export default function Home() {
           ))}
         {data?.search.edges.map((user: any) => {
           return (
-            <Link href={`https://github.com/${user.node.login}`}>
+            <Link
+              href={`/${user.node.login}/repositories`}
+              key={user.node.login}
+            >
               <a className="max-w-[300px] cursor-pointer grid focus:ring-br-primary focus:ring-2  focus:outline-none rounded-sm focus:ring-offset-4 ">
                 <Panel className="overflow-hidden">
                   <div className="flex items-center">
@@ -61,7 +63,9 @@ export default function Home() {
           );
         })}
       </div>
-      {data?.search.edges.length === 0 && <div className="text-center text-lg font-medium">No users found</div>}
+      {data?.search.edges.length === 0 && (
+        <div className="text-center text-lg font-medium">No users found</div>
+      )}
     </DefaultLayout>
   );
 }

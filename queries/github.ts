@@ -77,3 +77,58 @@ export const LIST_REPOSITORIES_WITH_PAGINATION = gql`
     }
   }
 `;
+
+export const SEARCH_USER_REPOSITORIES = gql`
+  query ListRepositoriesByUser($login: String!, $cursor: String) {
+    user(login: $login) {
+      repositories(first: 75, after: $cursor) {
+        edges {
+          node {
+            name
+            stargazers {
+              totalCount
+            }
+            watchers {
+              totalCount
+            }
+            owner {
+              login
+              avatarUrl
+            }
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+`;
+
+export const LIST_REPOSITORY_ISSUES = gql`
+  query ListRepositoryIssues($owner: String!, $name: String!, $cursor: String) {
+    repository(owner: $owner, name: $name) {
+      issues(first: 20, after: $cursor) {
+        edges {
+          node {
+            id
+            number
+            title
+            body
+            createdAt
+            state
+            author {
+              login
+              avatarUrl
+            }
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+`;

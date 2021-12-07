@@ -15,7 +15,6 @@ export function classNames(...classes: string[]) {
 }
 
 export default function BreadCrumbs({ items }: { items: IBreadcrumbItem[] }) {
-  console.log(items.slice(1));
   return (
     <nav className="flex overflow-y-visible relative" aria-label="Breadcrumb">
       <ol
